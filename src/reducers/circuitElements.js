@@ -1,4 +1,5 @@
 import { MOVE_ELEMENT, CHANGE_ELEMENT_SELECTION } from '../actions/circuitElements';
+import { GRID_SIZE } from '../constants';
 
 const INITIAL = {
     0: {
@@ -41,6 +42,12 @@ const INITIAL = {
     }
 }
 
+function snapToGrid({ x, y }) {
+    const snap = (val) => Math.ceil(val / GRID_SIZE) * GRID_SIZE;
+
+    return { x: snap(x), y: snap(y) };
+}
+
 export const circuitElements = (state = INITIAL, action) => {
     switch (action.type) {
         case MOVE_ELEMENT:
@@ -53,7 +60,7 @@ export const circuitElements = (state = INITIAL, action) => {
                     ...element,
                     transform: {
                         ...element.transform,
-                        position
+                        position: snapToGrid(position)
                     }
                 }
             };
