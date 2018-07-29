@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { moveElement, changeElementSelection } from '../actions/circuitElements';
+import { moveElement, rotateElement, changeElementSelection } from '../actions/circuitElements';
 import Resistor from './elements/Resistor';
 
 const CircuitElements = {
@@ -14,6 +14,7 @@ class EditorElement extends Component {
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
 
         this.dragging = false;
         this.shouldDeselect = true;
@@ -23,12 +24,14 @@ class EditorElement extends Component {
         document.addEventListener('mousedown', this.handleMouseDown);
         document.addEventListener('mousemove', this.handleMouseMove);
         document.addEventListener('mouseup', this.handleMouseUp);
+        document.addEventListener('keypress', this.handleKeyPress);
     }
 
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleMouseDown);
         document.removeEventListener('mousemove', this.handleMouseMove);
         document.removeEventListener('mouseup', this.handleMouseUp);
+        document.removeEventListener('keypress', this.handleKeyPress);
     }
 
     handleMouseDownOnElement() {
@@ -61,6 +64,12 @@ class EditorElement extends Component {
         this.dragging = false;
     }
 
+    handleKeyPress(e) {
+        if (this.props.selected === true && e.key === 'r') {
+            this.props.onRotate(this.props.element.id);
+        }
+    }
+
     render() {
         const translate = `translate(${this.props.element.transform.position.x} ${this.props.element.transform.position.y})`;
         const rotate = `rotate(${this.props.element.transform.rotation})`;
@@ -87,6 +96,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
     onDrag: (id, x, y) => dispatch(moveElement(id, { x, y })),
+    onRotate: (id) => dispatch(rotateElement(id)),
     onSelect: (id) => dispatch(changeElementSelection(id)),
     onDeselect: () => dispatch(changeElementSelection(null))
 });

@@ -1,4 +1,4 @@
-import { MOVE_ELEMENT, CHANGE_ELEMENT_SELECTION } from '../actions/circuitElements';
+import { MOVE_ELEMENT, ROTATE_ELEMENT, CHANGE_ELEMENT_SELECTION } from '../actions/circuitElements';
 import { GRID_SIZE } from '../constants';
 
 const INITIAL = {
@@ -48,22 +48,49 @@ function snapToGrid({ x, y }) {
     return { x: snap(x), y: snap(y) };
 }
 
+const moveElement = (state, action) => {
+    const { id, position } = action;
+    const element = state[id];
+
+    return {
+        ...state, 
+        [id]: {
+            ...element,
+            transform: {
+                ...element.transform,
+                position: snapToGrid(position)
+            }
+        }
+    };
+}
+
+const rotateElement = (state, action) => {
+    const { id } = action;
+    const element = state[id];
+
+    let rotation = element.transform.rotation += 90;
+    if (rotation >= 360) {
+        rotation = 0;
+    }
+
+    return {
+        ...state,
+        [id]: {
+            ...element,
+            transform: {
+                ...element.transform,
+                rotation
+            }
+        }
+    };
+}
+
 export const circuitElements = (state = INITIAL, action) => {
     switch (action.type) {
         case MOVE_ELEMENT:
-            const { id, position } = action;
-            const element = state[id];
-
-            return {
-                ...state, 
-                [id]: {
-                    ...element,
-                    transform: {
-                        ...element.transform,
-                        position: snapToGrid(position)
-                    }
-                }
-            };
+            return moveElement(state, action);
+        case ROTATE_ELEMENT:
+            return rotateElement(state, action);
         default:
             return state;
     }
