@@ -1,4 +1,4 @@
-import { MOVE_ELEMENT } from '../actions/circuitElements';
+import { MOVE_ELEMENT, CHANGE_ELEMENT_SELECTION } from '../actions/circuitElements';
 
 const INITIAL = {
     0: {
@@ -41,7 +41,7 @@ const INITIAL = {
     }
 }
 
-const circuitElements = (state = INITIAL, action) => {
+export const circuitElements = (state = INITIAL, action) => {
     switch (action.type) {
         case MOVE_ELEMENT:
             const { id, position } = action;
@@ -62,4 +62,11 @@ const circuitElements = (state = INITIAL, action) => {
     }
 }
 
-export default circuitElements;
+export const selectedCircuitElement = (state = null, action) => {
+    switch (action.type) {
+        case CHANGE_ELEMENT_SELECTION:
+            return action.id;
+        default:
+            return state;
+    }
+}

@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
-import circuitElements from './circuitElements';
+import { circuitElements, selectedCircuitElement } from './circuitElements';
 
 export default combineReducers({
-    circuitElements
+    circuitElements,
+    selectedCircuitElement
 });

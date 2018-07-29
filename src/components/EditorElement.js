@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { moveElement } from '../actions/circuitElements';
+import { moveElement, changeElementSelection } from '../actions/circuitElements';
 import Resistor from './elements/Resistor';
 
 const CircuitElements = {
@@ -16,6 +16,7 @@ class EditorElement extends Component {
         this.handleMouseUp = this.handleMouseUp.bind(this);
 
         this.dragging = false;
+        this.shouldDeselect = true;
     }
 
     componentDidMount() {
@@ -32,9 +33,19 @@ class EditorElement extends Component {
 
     handleMouseDownOnElement() {
         this.dragging = true;
+        this.shouldDeselect = false;
+
+        if (this.props.selected === false) {
+            this.props.onSelect(this.props.element.id);
+        }
     }
 
     handleMouseDown() {
+        if (this.shouldDeselect === true && this.props.selected === true) {
+            this.props.onDeselect();
+        }
+
+        this.shouldDeselect = true;
     }
 
     handleMouseMove(e) {
@@ -62,14 +73,22 @@ class EditorElement extends Component {
 
         return (
             <g transform={transform}>
-                <CircuitElementByType element={this.props.element} onMouseDown={this.handleMouseDownOnElement} />
+                <CircuitElementByType element={this.props.element} 
+                    selected={this.props.selected}
+                    onMouseDown={this.handleMouseDownOnElement} />
             </g>
         );
     }
 }
 
-const mapDispatchToProps = dispatch => ({
-    onDrag: (id, x, y) => dispatch(moveElement(id, { x, y }))
+const mapStateToProps = (state, ownProps) => ({
+    selected: state.selectedCircuitElement === ownProps.element.id
 });
 
-export default connect(null, mapDispatchToProps)(EditorElement);
+const mapDispatchToProps = dispatch => ({
+    onDrag: (id, x, y) => dispatch(moveElement(id, { x, y })),
+    onSelect: (id) => dispatch(changeElementSelection(id)),
+    onDeselect: () => dispatch(changeElementSelection(null))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditorElement);
