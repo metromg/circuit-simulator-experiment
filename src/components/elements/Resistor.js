@@ -1,4 +1,5 @@
 import React from 'react';
+import Pin from '../Pin';
 
 const Resistor = (props) => {
     const strokeColor = props.selected ? 'lime' : 'black';
@@ -12,6 +13,9 @@ const Resistor = (props) => {
                 stroke={strokeColor}></line>
             <line x1="32" y1="0" x2="48" y2="0" strokeWidth="3"
                 stroke={strokeColor}></line>
+
+            <Pin element={props.element} index={0} position={props.element.pins[0]} />
+            <Pin element={props.element} index={1} position={props.element.pins[1]} />
         </g>
     );
 }
