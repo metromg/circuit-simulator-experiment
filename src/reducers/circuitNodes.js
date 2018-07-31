@@ -8,6 +8,7 @@ const addNodeWithElements = (state, elements) => {
     return {
         ...state,
         [newNodeId]: {
+            id: newNodeId,
             elements
         }
     };
