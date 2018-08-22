@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { moveElement, rotateElement, changeElementSelection } from '../actions/circuitElements';
 import Resistor from './elements/Resistor';
+import VoltageSource from './elements/VoltageSource';
 
 const CircuitElements = {
-    Resistor
+    Resistor,
+    VoltageSource
 }
 
 class EditorElement extends Component {

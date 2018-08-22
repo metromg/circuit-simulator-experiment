@@ -4,12 +4,12 @@ import { GRID_SIZE } from '../constants';
 const INITIAL = {
     0: {
         id: 0,
-        type: 'Resistor',
+        type: 'VoltageSource',
         properties: {
-            resistance: 100
+            voltage: 5
         },
         transform: {
-            position: { x: 100, y: 100 },
+            position: { x: 64, y: 64 },
             rotation: 0
         },
         pins: [
@@ -28,7 +28,7 @@ const INITIAL = {
             resistance: 200
         },
         transform: {
-            position: { x: 200, y: 100 },
+            position: { x: 256, y: 256 },
             rotation: 0
         },
         pins: [
