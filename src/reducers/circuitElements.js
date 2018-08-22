@@ -39,6 +39,22 @@ const INITIAL = {
             top: 32, bottom: 32,
             left: 64, right: 64
         }
+    },
+    2: {
+        id: 2,
+        type: 'Ground',
+        properties: {},
+        transform: {
+            position: { x: 512, y: 512 },
+            rotation: 0
+        },
+        pins: [
+            { x: 0, y: -16 }
+        ],
+        bounds: {
+            top: 32, bottom: 32,
+            left: 64, right: 64
+        }
     }
 }
 
