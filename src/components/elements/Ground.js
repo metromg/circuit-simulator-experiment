@@ -7,7 +7,7 @@ const Ground = (props) => {
     return (
         <g onMouseDown={props.onMouseDown}>
             <line x1="0" y1="-16" x2="0" y2="16" strokeWidth="3"
-                  stroke={strokeColor}></line>
+                stroke={strokeColor}></line>
 
             <line x1="16" y1="0" x2="-16" y2="0" strokeWidth="3"
                 stroke={strokeColor}></line>
