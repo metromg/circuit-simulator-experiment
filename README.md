@@ -1,6 +1,8 @@
-The Circuit Simulator
-=====================
+# The Electronic Circuit Simulator
 
+Old little experiment with svg and react and redux.
+
+## Notes
 Redux Store Layout
 {
     circuitElements: {
